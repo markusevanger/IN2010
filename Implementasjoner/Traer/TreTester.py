@@ -25,9 +25,8 @@ def LiveTest(tre):
 # Fyller ett gitt tomt tre med ant antall noder
 def FyllTilfeldig(tre, ant):
 
-    tre.root = tre.insert(None, random.randint(1, 100))
-    for i in range(ant-1): # ant -1 fordi vi legger til en root over.
-        tre.insert(tre.root, random.randint(1, 100))
+    for i in range(ant): # ant -1 fordi vi legger til en root over.
+        tre.root = tre.insert(tre.root, random.randint(1, 1000))
     visualize(tre)
 
 def FyllKonstant(tre):

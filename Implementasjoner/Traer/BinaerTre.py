@@ -82,9 +82,9 @@ class BinaryTree:
 def test():
     b = BinaryTree() # opprett tre
     
-    # LiveTest(b) # La bruker fylle
-    # FyllTilfeldig(b, 10) # fyll tilfeldig x ganger
-    FyllKonstant(b) # Fyller treet med samme input hver gang
+    # LiveTest(b) # La bruker fylle.
+    # FyllTilfeldig(b, 10) # fyll tilfeldig x ganger.
+    FyllKonstant(b) # Fyller treet med samme input hver gang.
 
     svar = input("Skriv hvilket tall du ønsker å fjerne: ")
     b.Remove(b.root, int(svar))
