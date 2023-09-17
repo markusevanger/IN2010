@@ -59,9 +59,7 @@ class Teque:
     
     def push_back(self, x):
         self.d2.push_back(self.Node(x))
-        # print("D1:", len(self.d1), " D2:", len(self.d2))
         if len(self.d1) < len(self.d2)-1: # da må vi flytte en node fra d2 til d1.
-            print("balaneserer...", x) 
             self.d1.push_back(self.d2.head)
             self.d2.head = self.d2.head.neste
             self.d2.head.forrige = None
@@ -72,7 +70,9 @@ class Teque:
     def push_middle(self, x):
         
         self.d1.push_back(self.Node(x))
+
         if len(self.d2) < len(self.d1)-1: # om det er 2 forksjell mellom d1 og d2, må vi flytte en node fra d1 til d2. 
+            
             # Flytte peker fra slik at [y, y, x] [y] = [y, y] [x, y] 
             self.d2.push_front(self.d1.tail) # Legg til d1.tail som d2.head
             self.d1.tail = self.d1.tail.forrige # La d1.tail være det andt siste elem i d1.
@@ -81,25 +81,72 @@ class Teque:
     
             self.d1.size -= 1
 
+
     def get(self, i):
 
         i = int(i)
-        if i > len(self.d1):
-            n = self.d2.head
-            teller = len(self.d1)
-            while teller < i-1:
-                n = n.neste
-                teller+=1
-            print(n)
-        else:
-            n = self.d1.head
+
+        # print(self)
+        # print("i" + str(i) + ": ", end="")
+
+        # Foreløpig bruker lineær tid som er for tregt?
+
+        if i < len(self.d1):
             teller = 0
-            while teller < i-1:
+            n = self.d1.head
+            while n != None:
+                if teller == i:
+                    print(n, end=", ")
+                    return
                 n = n.neste
                 teller+=1
-            print(n)
-                
-
-
             
+        else:
+            teller = len(self.d1)
+            n = self.d2.head
+            while n != None:
+                if teller == i:
+                    print(n, end=", ")
+                    return
+                n = n.neste
+                teller+=1
+
+        print("Fant ikke indeks:", i)
+    
+    # kun for testing.
+    def __str__(self):
+
+        tqstr = ""
+        n = self.d1.head
+        while n != None:
+            tqstr += n.__str__() + ", "
+            n = n.neste
         
+        n = self.d2.head
+        tqstr += " | "
+
+        while n != None:
+            tqstr += n.__str__() + ", "
+            n = n.neste
+
+        return tqstr
+            
+def main():
+
+    tq = Teque()
+
+    for n in range(int(input())):
+        S = input().split(" ")
+        x = S[1] 
+        S = S[0]
+        
+        if S == "push_back":
+            tq.push_back(x)
+        if S == "push_front":
+            tq.push_front(x)
+        if S == "push_middle":
+            tq.push_middle(x)
+        if S == "get":
+            tq.get(x)
+
+#main()
