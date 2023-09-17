@@ -16,7 +16,7 @@ def visualize(tre):
 
 def visualizeRekursiv(start, graph):
     if start != None:
-        graph.add_node(start.element)
+        graph.add_node(start.element, start.height)
         if start.left:
             graph.add_edge(start.element, start.left.element)
             visualizeRekursiv(start.left, graph)

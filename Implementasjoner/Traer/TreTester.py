@@ -31,12 +31,15 @@ def FyllTilfeldig(tre, ant):
 
 def FyllKonstant(tre):
 
-    tre.root = tre.insert(None, 50)
-    r = tre.root
-    
-    tre.insert(r, 25)
-    tre.insert(r, 75)
-    tre.insert(r, 100)
-    tre.insert(r, 60)
-    tre.insert(r, 30)
+    tre.root = tre.insert(50)
+    tre.root = tre.insert(100)
+    tre.root = tre.insert(75)
+    tre.root = tre.insert(150)
+    tre.root = tre.insert(10)
+    tre.root = tre.insert(20)
+    tre.root = tre.insert(15)
+    tre.root = tre.insert(5)
+    tre.root = tre.insert(1)
+    tre.root = tre.insert(2)
+
     visualize(tre)

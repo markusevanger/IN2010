@@ -92,9 +92,6 @@ class AVLtree:
 
     def LeftRotate(self, z): # Roter treet til venstre slik at z.right blir den nye roten.
 
-        if z is None:
-            return
-
         y = z.right
         t1 = y.left
 
@@ -142,7 +139,8 @@ class AVLtree:
 def test():
     
     avl = AVLtree()
-    FyllTilfeldig(avl, 100)
+    FyllKonstant(avl)
+    # FyllTilfeldig(avl, 100)
     # LiveTest(avl)
     print("Hoyden av treet er:", avl.Height(avl.root))
 
