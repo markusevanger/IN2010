@@ -31,15 +31,9 @@ def FyllTilfeldig(tre, ant):
 
 def FyllKonstant(tre):
 
-    tre.root = tre.insert(50)
-    tre.root = tre.insert(100)
-    tre.root = tre.insert(75)
-    tre.root = tre.insert(150)
-    tre.root = tre.insert(10)
-    tre.root = tre.insert(20)
-    tre.root = tre.insert(15)
-    tre.root = tre.insert(5)
-    tre.root = tre.insert(1)
-    tre.root = tre.insert(2)
+    tall_som_fylles = [50, 100, 75, 150, 10, 20, 15, 5, 1, 2, 3]
+
+    for tall in tall_som_fylles:
+        tre.root = tre.insert(tre.root, tall)
 
     visualize(tre)

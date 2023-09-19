@@ -139,8 +139,8 @@ class AVLtree:
 def test():
     
     avl = AVLtree()
-    FyllKonstant(avl)
-    # FyllTilfeldig(avl, 100)
+    # FyllKonstant(avl)
+    FyllTilfeldig(avl, 100)
     # LiveTest(avl)
     print("Hoyden av treet er:", avl.Height(avl.root))
 
