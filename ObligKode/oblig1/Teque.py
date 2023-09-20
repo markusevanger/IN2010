@@ -1,9 +1,8 @@
 
 from collections import deque
-import sys, time
+import sys
 
 class Teque:
-
     def __init__(self):
         self.d1 = deque()
         self.d2 = deque()
@@ -21,20 +20,18 @@ class Teque:
         self.balance()
 
     def balance(self):
-        
-        differanse = len(self.d1) - len(self.d2)
 
+        differanse = len(self.d1) - len(self.d2)
         if differanse > 1:
             self.d2.appendleft(self.d1.pop())
-
         elif differanse <= -1:
             self.d1.append(self.d2.popleft())
             
     def __getitem__(self, i): # idk e mayby raskere?
 
         if len(self.d1) > i:
-            return(self.d1[i])
-        return(self.d2[i - len(self.d1)])
+            return self.d1[i]
+        return self.d2[i - len(self.d1)]
 
 def kjor():
     tq = Teque()
