@@ -1,6 +1,6 @@
 
 from collections import deque
-from TequeList import TequeList
+import sys, time
 
 class Teque:
 
@@ -10,87 +10,51 @@ class Teque:
 
     def push_front(self, x):
         self.d1.appendleft(x)
-
-        # balansere deques om len(d1) er 1< enn len(d2)
-        if len(self.d2) < len(self.d1)-1:
-            self.d2.appendleft(self.d1.pop())
+        self.balance()
 
     def push_back(self, x):
         self.d2.append(x)
-
-        if len(self.d1) < len(self.d2)-1:
-            self.d1.append(self.d2.popleft())
+        self.balance()
 
     def push_middle(self, x):
-        if len(self.d2) < len(self.d1) - 1:
+        self.d2.appendleft(x)
+        self.balance()
+
+    def balance(self):
+        
+        differanse = len(self.d1) - len(self.d2)
+
+        if differanse > 1:
             self.d2.appendleft(self.d1.pop())
-        self.d1.append(x)
 
-    # 
-    def get(self, i):
+        elif differanse <= -1:
+            self.d1.append(self.d2.popleft())
+            
+    def __getitem__(self, i): # idk e mayby raskere?
 
         if len(self.d1) > i:
-            print(self.d1[i], end=", ")
-        else:
-            print(self.d2[i - len(self.d1)], end=", ")
+            return(self.d1[i])
+        return(self.d2[i - len(self.d1)])
 
-    def hent(self, i):
-        if len(self.d1) > i:
-            return self.d1[i]
-        else:
-            return self.d2[i - len(self.d1)]
-
-    def __str__(self):
-
-        for i in range(len(self.d1)):
-                print(self.d1[i], end=", ")
-
-        # print("|", end=" ") # skiller lister
-
-        for i in range(len(self.d2)):
-                print(self.d2[i], end= ", ")
-
-        return ""
-
-def print_alle(tq, tql):
-    teller = 0
-    for i in range(len(tql)):
-        tall1 = tq.hent(i)
-        tall2 = tql.hent(i)
-        
-        
-        if tall1 == tall2:
-            teller += 1  
-        else:  
-            print("Fant ulikhet!", tall1, tall2)
-
-    print("Scan ferdig", teller/len(tql)*100, "% riktige av", len(tql), "tall")
-
-def main():
-
+def kjor():
     tq = Teque()
-    tql = TequeList()
 
-    for n in range(int(input())):
-        S = input().split(" ")
-        x = S[1]
+    for _ in range(int(input())):
+        S = sys.stdin.readline().split()
+        x = S[1] # bedre om x er string, da slipper vi konkattinering, rasker
         S = S[0]
+        
 
         if S == "push_back":
             tq.push_back(x)
-            tql.push_back(x)
-        if S == "push_front":
+        elif S == "push_front":
             tq.push_front(x)
-            tql.push_front(x)
-        if S == "push_middle":
+        elif S == "push_middle":
             tq.push_middle(x)
-            tql.push_middle(x)
-        if S == "get":
-            tq.get(int(x))
-            tql.get(int(x))
-            print()
+        else:
+            sys.stdout.write(tq[int(x)] + "\n")
 
-    print_alle(tq, tql)
-    print(tq)
-    print(tql)
-main()
+#start_time = time.time()
+kjor()
+#end_time = time.time()
+#print("kjor tok", end_time - start_time, "sekunder")
