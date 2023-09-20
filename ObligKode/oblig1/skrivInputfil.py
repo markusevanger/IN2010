@@ -1,11 +1,12 @@
 
-
+import random
 f = open("input.txt", "w")
-operasjon = "push_middle"
-antall_linjer = 100
+operasjoner = ["push_front", "push_middle", "push_back"]
+antall_linjer = 3
 
 f.write(f"{antall_linjer}\n")
 for i in range(antall_linjer):
-    f.write(f"{operasjon} {i} \n")
+    r = random.randint(0, 2)
+    f.write(f"{operasjoner[r]} {i} \n")
 
 f.close()

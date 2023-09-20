@@ -22,7 +22,7 @@ class Teque:
             self.d1.append(self.d2.popleft())
 
     def push_middle(self, x):
-        if len(self.d2) < len(self.d1)-1:
+        if len(self.d2) < len(self.d1) - 1:
             self.d2.appendleft(self.d1.pop())
         self.d1.append(x)
 
@@ -53,12 +53,18 @@ class Teque:
         return ""
 
 def print_alle(tq, tql):
+    teller = 0
     for i in range(len(tql)):
         tall1 = tq.hent(i)
         tall2 = tql.hent(i)
         
-        if tall1 != tall2:
-            print(tall1, tall2)
+        
+        if tall1 == tall2:
+            teller += 1  
+        else:  
+            print("Fant ulikhet!", tall1, tall2)
+
+    print("Scan ferdig", teller/len(tql)*100, "% riktige av", len(tql), "tall")
 
 def main():
 
@@ -85,4 +91,6 @@ def main():
             print()
 
     print_alle(tq, tql)
+    print(tq)
+    print(tql)
 main()
