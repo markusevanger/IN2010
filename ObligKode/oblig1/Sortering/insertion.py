@@ -11,5 +11,4 @@ def sort(A):
         while j > 0 and A[j-1] > A[j]:
             A.swap(j-1, j)
             j = j - 1
-
     return A
