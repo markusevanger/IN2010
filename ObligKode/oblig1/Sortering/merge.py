@@ -5,6 +5,8 @@ def sort(A):
     # Use A.swap(i, j) to swap the values at two indices i and j. The swap is
     # counted, when using this method. Comparisons are counted automatically.¨
 
+    
+    # 
     n = len(A)
     if n <= 1:
         return A
