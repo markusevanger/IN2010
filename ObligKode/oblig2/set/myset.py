@@ -1,5 +1,6 @@
 from TreTester import LiveTest, FyllTilfeldig, FyllKonstant
 from Visualize import visualize
+import sys
 
 class Set:
 
@@ -28,21 +29,40 @@ class Set:
             node.right = self.insert(node.right, x)
         # else er x = node.element, og vi trenger ikke sette inn.
         return node
- 
-    def remove(self, v, x):
 
-        # Kommet frem til tomt (sub)tre. Ting vi prøver å slette ikke eksister.
+
+    def contains(self, node, x):
+        if node == None:
+            return False
+        if node.element == x:
+            return True
+        if node.element < x:
+            return self.contains(node.right, x)
+        if node.element > x:
+            return self.contains(node.left, x)
+ 
+    # Hjelpemetode slik at vi teller ned størrelsen kun på første kall og ikke på hvert rekursive kall. 
+    def remove(self, x): # Kjøretid: O(2log(n)) 
+
+        # sjekke om v er i treet, 
+        if self.contains(self.root, x): # + O(log(n))
+            self.size -= 1
+        return self.removeRek(self.root, x) # + O(log(n))
+
+    def removeRek(self, v, x):
+        
+        
         if v == None:
             return None
         
         # x er mindre enn elementet vi er i, dermed må vi lete videre i venstre subtre.
         if x < v.element:
-            v.left = self.remove(v.left, x)
+            v.left = self.removeRek(v.left, x)
             return v
         
         # x er større enn elementet vi er i, dermed lete videre i høyre subtre
         if x > v.element:
-            v.right = self.remove(v.right, x)
+            v.right = self.removeRek(v.right, x)
             return v
         
         # Om venstre peker ikke eksisterer
@@ -57,9 +77,8 @@ class Set:
         
         u = self.findMin(v.right) # finn det minste elemente i det høyre subtreet
         v.element = u.element # v sitt element er nå det minste elementet i v´s subtre
-        v.right = self.remove(v.right, u.element) # u har ikke et venstre subtre, da det er det minste elementet.
+        v.right = self.removeRek(v.right, u.element) # u har ikke et venstre subtre, da det er det minste elementet.
         return v
-
 
     def findMin(self, node):
         if node == None: # skal kun oppstå om roten er 0
@@ -67,17 +86,6 @@ class Set:
         if node.left == None:
             return node
         return self.findMin(node.left)
-    
-    def contains(self, node, x):
-
-        if node == None:
-            return False
-        if node.element == x:
-            return True
-        if node.element < x:
-            return self.contains(node.right, x)
-        if node.element > x:
-            return self.contains(node.left, x)
     
 def main():
     set = Set()
@@ -89,25 +97,27 @@ def main():
 def kjor():
 
     set = Set()
+    output_liste = []
 
     for i in range(int(input())):
         linje = input().split(" ")
         S = linje[0]
 
         if S == "size":
-            print(set.size)
+            output_liste.append(set.size)
         else:
             x = int(linje[1])
             if S == "insert":
                 set.root = set.insert(set.root, x)
             if S == "contains":
-                print(set.contains(set.root, x))
+                output_liste.append(set.contains(set.root, x))
             if S == "remove":
-                if set.contains(set.root, x):
-                    set.size -= 1
-                    set.root = set.remove(set.root, x)
+                    set.root = set.remove(x)
 
     visualize(set)
+
+    for s in output_liste:
+        print(s)
 
 # main()
 kjor()

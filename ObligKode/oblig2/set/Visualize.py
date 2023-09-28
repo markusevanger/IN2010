@@ -1,4 +1,4 @@
-import pygraphviz as pgv
+import graphviz as gv
 
 
 # Tar imot et tre og tegner det med "pygraphviz"
@@ -8,18 +8,23 @@ import pygraphviz as pgv
 def visualize(tre):
 
     # directed graph
-    G = pgv.AGraph(strict=False, directed=True)
-    visualizeRekursiv(tre.root, G)
+    G = gv.Digraph()
+    add_tree_nodes_edges(G, None, tre.root)
+    G.render("tree", format="png")
 
-    G.layout(prog='dot') # tegn
-    G.draw('tree.png')
+# Define a recursive function to add nodes and edges for a tree
+def add_tree_nodes_edges(G, parent_node, node):
+    if node is None:
+        return
 
-def visualizeRekursiv(start, graph):
-    if start != None:
-        graph.add_node(start.element)
-        if start.left:
-            graph.add_edge(start.element, start.left.element)
-            visualizeRekursiv(start.left, graph)
-        if start.right:
-            graph.add_edge(start.element, start.right.element)
-            visualizeRekursiv(start.right, graph)
+    # Add the current node
+    G.node(str(node.element))
+
+    # Add the edge from the parent to the current node
+    if parent_node is not None:
+        G.edge(str(parent_node.element), str(node.element))
+
+    # Recursively add nodes and edges for the left and right subtrees
+    add_tree_nodes_edges(G, node, node.left)
+    add_tree_nodes_edges(G, node, node.right)
+
