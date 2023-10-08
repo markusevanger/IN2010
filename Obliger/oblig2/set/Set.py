@@ -85,13 +85,6 @@ class Set:
         if node.left == None:
             return node
         return self.findMin(node.left)
-    
-def main():
-    set = Set()
-
-    LiveTest(set)
-    set.remove(set.root, 10)
-    LiveTest(set)
 
 def kjor():
 
@@ -113,12 +106,8 @@ def kjor():
             if S == "remove":
                     set.root = set.remove(x)
 
-    visualize(set)
-
     for s in output_liste:
         print(s)
-
-# main()
 kjor()
 
     
