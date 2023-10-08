@@ -7,7 +7,7 @@ def merge(A1, A2, A):
     j = 0
 
     # Denne while løkken iterer over begge listene og legger til det minste elemente fra en av listene. 
-    while i < len(A1) and j < len(A2): 
+    while i < len(A1) and j < len(A2): # Stopper når en av listene er ferdig å iterere. 
         if A1[i] <= A2[j]: # om element i A1 er mindre elller lik A2:
             A[i + j] = A1[i] # Legg element i A1 i A. 
             i = i + 1 # Inkrementer index for A1: i.

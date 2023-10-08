@@ -10,14 +10,10 @@ def LiveTest(tre):
 
     svar = input()
 
-    if svar != "":
-        tre.root = tre.insert(None, int(svar))
-        visualize(tre)
-
     svar = input()
     while svar != "":
         
-        tre.insert(tre.root, int(svar))
+        tre.root = tre.insert(tre.root, int(svar))
         visualize(tre)
         svar = input()
 
