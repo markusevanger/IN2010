@@ -1,6 +1,3 @@
-from TreTester import LiveTest, FyllTilfeldig, FyllKonstant
-from Visualize import visualize
-
 class Set:
 
     class Node:
