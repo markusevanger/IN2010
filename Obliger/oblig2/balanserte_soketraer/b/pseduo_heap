@@ -1,0 +1,18 @@
+Algoritme: Finn Midten av Heap, rekursivt
+Input: Sortert Heap A med n antall elementer
+Output: Printet Heap A 
+Prosedyre: FinnMidtenHeapNy(A)
+
+    if |A| > 1 then:
+        B ← []
+        for i ← 0 to |A| // 2 do:
+            heappush(B, heappop(A))
+        print(heappop(A))
+
+        FinnMidtenHeapNy(A)
+        FinnMidtenHeapNy(B)
+
+    else if |A| = 1 then:
+        print(heappop(A))
+
+
