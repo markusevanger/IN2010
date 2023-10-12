@@ -1,4 +1,4 @@
-# from vizualize import create_graph_image
+from vizualize import create_graph_image
 
 class Film:
 
@@ -10,45 +10,69 @@ class Film:
     def __str__(self):
         return f"{self.tittel} ({self.rating})"
     
+    
 class Actor:
-    def __init__(self, actor_id, navn, filmerSpiltI, filmerDict):
+    def __init__(self, actor_id, navn, filmerSpiltI):
         self.id = actor_id
         self.navn = navn
-        self.filmer = []
-
-        for f in filmerSpiltI:
-            f = f.strip() # siste film id har \n bak seg.
-            if f in filmerDict:
-                self.filmer.append(filmerDict[f]) 
-    
+        self.filmer = filmerSpiltI
     def __str__(self):
-        print(f"{self.navn} har spilt i {len(self.filmer)} filmer:")
-        for f in self.filmer: 
-            print(f"- {f}")
-        return ""
+        return f"{self.navn}"
 
-def lesFilmer(filmer_fil):
+
+# Ta imot tsv fil med filmer og opprett film objekter for hver linje.
+def les_filmer(filmer_fil):
     filmDict = {}
-    f = open(filmer_fil, "r")
+    f = open(filmer_fil, "r", encoding="utf-8")
     for linje in f:
         linje = linje.split("\t")
         filmDict[linje[0]] = Film(linje[0], linje[1], linje[2])
 
     return filmDict
 
-def lesActors(actors_fil, filmer):
+# Ta imot tsv fil med actors og opprett film objekter for hver linje. 
+def les_actors(actors_fil):
     li = []
-    f = open(actors_fil)
+    f = open(actors_fil, "r",  encoding="utf-8")
     for linje in f:
         linje = linje.split("\t")
-        li.append(Actor(linje[0], linje[1], linje[2:], filmer))
+        li.append(Actor(linje[0], linje[1], linje[2:]))
     return li
 
-def main():
-    filmer = lesFilmer("six-degrees-of-imdb-ressursside-main/marvel_movies.tsv")
-    actors = lesActors("six-degrees-of-imdb-ressursside-main/marvel_actors.tsv", filmer)
+def bygg_graf(filmer, actors):
+    
+    # Bruker dict representasjon av graf
+    kanter = {} 
 
+    teller = 0
     for a in actors:
-        print(a)
+
+        teller += 1
+        print(str(round(teller/len(actors)*100, 2)) + "% ferdig")
+        for b in actors:
+            if a != b:
+                for film in a.filmer:
+                    if film in b.filmer:
+                        kanter[a] = b            
+
+    return kanter
+
+def main():
+    filmer = les_filmer("six-degrees-of-imdb-ressursside-main/marvel_movies.tsv")
+    actors = les_actors("six-degrees-of-imdb-ressursside-main/marvel_actors.tsv")
+
+    graf = bygg_graf(filmer, actors)
+    # create_graph_image(graf)
+
+    print("Noder:", len(graf))
+
+    ant_edges = 0
+    for a in graf:
+        ant_edges += len(graf)
+    print("Edges:", ant_edges)
+
+
+
+
 
 main()

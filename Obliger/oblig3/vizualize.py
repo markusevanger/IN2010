@@ -1,7 +1,7 @@
 from graphviz import Graph
 
 def create_graph_image(graph):
-    dot = Graph(format='png', graph_attr={'layout': 'neato', 'strict': 'true'})
+    dot = Graph(format='png', graph_attr={'patchwork': 'twopi', 'strict': 'true'})
 
     # Add nodes and edges to the graph
     added_edges = set()  # To keep track of added edges
