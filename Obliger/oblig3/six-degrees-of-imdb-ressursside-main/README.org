@@ -1,0 +1,12 @@
+IMDB grafen bygges på bakgrunn av følgende datasett
+- [[file:actors.tsv]]
+- [[file:movies.tsv]]
+
+For testing kan dere bruke et svært mye mindre datasett:
+- [[file:marvel_actors.tsv]]
+- [[file:marvel_movies.tsv]]
+
+Grafene er illustrert med utgangspunkt i de to ulike grafrepresentasjonene som
+nevnes i oppgaveteksten her:
+- [[file:marvelgraph_labeled.pdf]]
+- [[file:marvelgraph_nodetypes.pdf]]
