@@ -26,7 +26,11 @@ class HashSet:
             self.size += 1
 
     def contains(self, key):
-        return key in self.ls[self.keyTilIndex(key)]
+
+        keyIndeks = self.keyTilIndex(key)
+        if self.ls[keyIndeks] != None:
+            return key in self.ls[self.keyTilIndex(key)]
+        return False 
     
     def remove(self, key):
         if self.contains(key):
@@ -45,7 +49,7 @@ class HashSet:
 def main():
 
     hs = HashSet(100000)
-    for i in range(int(input())):
+    for _ in range(int(input())):
         inp = input().strip().split(" ")
 
         if inp[0] == "size":
