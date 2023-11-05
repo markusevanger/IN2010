@@ -3,75 +3,98 @@ from visualize_hash import create_hash_viz
 
 class HashSet:
     def __init__(self):
-        self.ls = [None] 
         self.size = 0
-    
+        self.ls_max = 1
+        self.ls = [None]
+
     def __str__(self):
         for i in self.ls:
             print(i)
         return ""
-    
+
     def __len__(self):
         return len(self.ls)
-    
+
     def insert(self, key):
-        
-        if self.size == len(self.ls): # om vi har nådd lengden av ls
-            self.resize(key)
-    
+        # Om self.size er >75% av N (ls_max)
+        if (self.size / self.ls_max) >= 0.75:
+            self.rehash()
+
         if not self.contains(key):
-            index = self.keyTilIndex(key)
-            if self.ls[index] != None:
-                self.ls[index].append(key)
-            else:
-                self.ls[index] = [key]
-            self.size += 1  
-            
-        
-    # Dobbler størrelsen av interne listen. 
-    def resize(self, key):
-        ny_ls = [None] * (len(self.ls)*2)
+            index = self.keyTilIndex(key)  # finn hash key til en index.
+
+            # gå frem i listen, til det ikke lenger er en kollisjon
+            while self.ls[index] != None:
+                index += 1
+                if index == self.ls_max:
+                    index = 0
+            # Skal aldri evig while løkke da vi sjekker at det er nok plass før while løkken.
+
+            self.ls[index] = key
+            self.size += 1
+
+    # Dobbler størrelsen av interne listen.
+    def rehash(self):
+
+        self.ls_max = self.ls_max * 2
+        ny_ls = [None] * self.ls_max
+
         gm_ls = self.ls
         self.ls = ny_ls
         self.size = 0
 
         for i in range(len(gm_ls)):
-            if gm_ls[i] != None: # Burde fjernes om vi implementerer lineaer probing. 
-                for key in gm_ls[i]:
-                    self.insert(key)
-        self.ls = ny_ls
-
-
-
+            if gm_ls[i] != None:
+                self.insert(gm_ls[i])
 
     def contains(self, key):
-        keyIndeks = self.keyTilIndex(key)
-        if self.ls[keyIndeks] != None:
-            return key in self.ls[self.keyTilIndex(key)]
-        return False 
-    
+        index = self.keyTilIndex(key)
+        start_index = index
+        while self.ls[index] != key:
+            index = (index + 1) % self.ls_max
+
+            if index == start_index:  # om vi rundet hele ls.
+                return False
+
+        return True
+
     def remove(self, key):
         if self.contains(key):
-            self.ls[self.keyTilIndex(key)].remove(key)
+            
+            index = self.keyTilIndex(key)
+            while self.ls[index] != key:
+                index = (index + 1) % self.ls_max
+            
+            self.ls[index] = None
             self.size -= 1
+            self.tett_hull(index)
+
         return None
 
-    
+    def tett_hull(self, index_for_hull):
+
+        lete_index = index_for_hull
+        while self.ls[lete_index] != None:
+            lete_index-=1
+
+            key_paa_index = self.ls[lete_index]
+            if self.keyTilIndex(key_paa_index) == index_for_hull:
+                self.ls[index_for_hull] = key_paa_index
+                self.ls[lete_index] = None
+                self.tett_hull(lete_index)
+ 
     def size(self):
         return self.size
-            
+
     def keyTilIndex(self, key):
         h = 0
         for c in key:
-            h = 31 * h + ord(c) # ord returnerer ascii verdien til c
-        
-        while self.ls[h % len(self)] != None: #passe på at kollisjoner ikke skjer
-            h +=1
+            h = 31 * h + ord(c)  # ord() returnerer ascii verdien til c
 
-        return h % len(self)
+        return h % self.ls_max
+
 
 def main():
-
     hs = HashSet()
     for _ in range(int(input())):
         inp = input().strip().split(" ")
@@ -85,22 +108,17 @@ def main():
         elif inp[0] == "contains":
             print(hs.contains(inp[1]))
 
-
-    
-    
-
-
-    #create_hash_viz(hs.ls)
+    # create_hash_viz(hs.ls)
 
 
 def lagListeAvOrdFil(filnavn):
-    
     ls = []
     t = 0
     lengde_teller = 0
-    with open (filnavn, "r") as f:
+    with open(filnavn, "r") as f:
         for linje in f:
-                ls.append(linje.strip())
+            ls.append(linje.strip())
         return ls
+
 
 main()

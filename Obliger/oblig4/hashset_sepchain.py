@@ -17,7 +17,6 @@ class HashSet:
     def insert(self, key):
         
         if self.size == len(self.ls): # om vi har nådd lengden av ls
-            #print(f"Size: {self.size} | len: {len(self.ls)}")
             self.resize(key)
     
         if not self.contains(key):
