@@ -17,7 +17,7 @@ def create_graph_image(graph):
     dot.view(filename='graph_image')  # This will create 'graph_image.png' and open it in the default image viewer
 
 if __name__ == "__main__":
-    graph = {
+    testgraf = {
         "A": ["B", "C", "D"],
         "B": ["A", "C"],
         "C": ["A", "B", "D", "F"],
@@ -27,4 +27,4 @@ if __name__ == "__main__":
         "G": ["F"],
     }
 
-    create_graph_image(graph)
+    create_graph_image(testgraf)

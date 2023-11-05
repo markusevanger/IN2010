@@ -2,31 +2,49 @@ from visualize_hash import create_hash_viz
 
 
 class HashSet:
-    def __init__(self, size):
-        self.ls = [None] * size # lager en liste med 370 nones. 
+    def __init__(self):
+        self.ls = [None] 
         self.size = 0
     
     def __str__(self):
-
         for i in self.ls:
             print(i)
         return ""
+    
     def __len__(self):
         return len(self.ls)
     
     def insert(self, key):
-
+        
+        if self.size == len(self.ls): # om vi har nådd lengden av ls
+            #print(f"Size: {self.size} | len: {len(self.ls)}")
+            self.resize(key)
+    
         if not self.contains(key):
             index = self.keyTilIndex(key)
             if self.ls[index] != None:
                 self.ls[index].append(key)
             else:
                 self.ls[index] = [key]
-
             self.size += 1
+            
+        
+    # Dobbler størrelsen av interne listen. 
+    def resize(self, key):
+        ny_ls = [None] * (len(self.ls)*2)
+        gm_ls = self.ls
+        self.ls = ny_ls
+        self.size = 0
+
+        for i in range(len(gm_ls)):
+            if gm_ls[i] != None: # Burde fjernes om vi implementerer lineaer probing. 
+                for key in gm_ls[i]:
+                    self.insert(key)
+        self.ls = ny_ls
+
+
 
     def contains(self, key):
-
         keyIndeks = self.keyTilIndex(key)
         if self.ls[keyIndeks] != None:
             return key in self.ls[self.keyTilIndex(key)]
@@ -48,7 +66,7 @@ class HashSet:
 
 def main():
 
-    hs = HashSet(100000)
+    hs = HashSet()
     for _ in range(int(input())):
         inp = input().strip().split(" ")
 
