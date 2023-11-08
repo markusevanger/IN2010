@@ -1,37 +1,12 @@
-class Node:
-    def __init__(self, val, children, parent):
-
-        self.value = val
-        self.parent = parent
-        self.children = []
-        
-        for child_val in children:
-            self.children.append(Node(child_val, [], self)) # oppretter løv node med ingen egne barn, men har self som forelder.
-
-
-    def change_childs(self, children):
-        self.children = children
-    
-    def add_parent(self, parent):
-        self.parent = parent
-
-    def __str__(self):
-        return str(self.value)
-    
-    def __repr__(self) -> str:
-        return self.__str__()
-    
-    def __eq__(self, other):
-        return self.value == other.value
-
-
+#import graphviz
+from collections import deque, defaultdict
 
 def lag_tre():
     
     
 
-    katt = int(input()) # første linje inneholder noden katten er på. 
-    G = {}
+    katt = input() # første linje inneholder noden katten er på. 
+    G = defaultdict(set)
 
     ferdig = False
     while not ferdig:
@@ -41,10 +16,9 @@ def lag_tre():
         if subtree != "-1":
 
             subtree = subtree.split(" ")
-            subroot_value = int(subtree[0])
-            subtree_children = make_list_to_ints(subtree[1:])
+            subroot_value = subtree[0]
 
-            G[subroot_value] = subtree
+            G[subroot_value] = subtree[1:]
             
         else:
             ferdig = True
@@ -69,34 +43,53 @@ def finn_rot(G):
 
 
 def finn_katt(G, rot, katt):
-    print(f"Finner katt fra {rot} til katt {katt}.")
+    #print(f"Finner katt fra {rot} til katt {katt}...")
+
+    parents = shortest_path_from(G, rot)
+    v = katt
+    path = []
+    
+    while v: 
+        path.append(v)
+        v = parents[v]
+
+    return path
+    
+
+def shortest_path_from(G, rot):
+    parents = {rot : None}
+    queue = deque([rot])
+
+    while queue: 
+        u = queue.popleft()
+        for edge in G[u]:
+            if edge not in parents:          
+                parents[edge] = u
+                queue.append(edge)
+    return parents
+
 
 
 def main():
     
     G, rot, katt = lag_tre()
+    #tegn_dict_repr_graf(G, rot)
     rute = finn_katt(G, rot, katt)
-
-
-
-
-
-
-
-
-def value_in_tree(root, value):
-    if root.value == value:
-        return True
     
-    for child in root.children:
-        if value_in_tree(child, value) is True:
-            return True
     
-    return False
+    for node in rute:
+        print(node, end=" ")
+    #print(f"Fant katt. Den må ta ruten {rute}")
 
-def make_list_to_ints(ls):
-    for i in range(len(ls)):
-        ls[i] = int(ls[i])
-    return ls
+
+def tegn_dict_repr_graf(G, rot):
     
+    dot = graphviz.Graph(format='png', engine='dot' )
+    
+    for node, neighbors in G.items():
+        for neighbor in neighbors:
+            dot.edge(str(node), str(neighbor))  # Add an edge to each neighbor
+    
+    dot.render('graph')
+
 main()
