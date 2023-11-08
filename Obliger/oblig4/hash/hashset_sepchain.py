@@ -17,6 +17,7 @@ class HashSet:
     def insert(self, key):
         
         if self.size == len(self.ls): # om vi har nådd lengden av ls
+            #print(f"Size: {self.size} | len: {len(self.ls)}")
             self.resize(key)
     
         if not self.contains(key):
@@ -44,9 +45,9 @@ class HashSet:
 
 
     def contains(self, key):
-        keyIndeks = self.keyTilIndex(key)
-        if self.ls[keyIndeks] != None:
-            return key in self.ls[self.keyTilIndex(key)]
+        keyIndex = self.keyTilIndex(key)
+        if self.ls[keyIndex] is not None:
+            return key in self.ls[keyIndex]
         return False 
     
     def remove(self, key):
@@ -54,9 +55,11 @@ class HashSet:
             self.ls[self.keyTilIndex(key)].remove(key)
             self.size -= 1
     
+    
     def size(self):
         return self.size
-            
+
+ 
     def keyTilIndex(self, key):
         h = 0
         for c in key:
