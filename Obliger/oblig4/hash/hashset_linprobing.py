@@ -1,4 +1,3 @@
-from visualize_hash import create_hash_viz
 
 
 class HashSet:
@@ -107,18 +106,5 @@ def main():
             hs.remove(inp[1])
         elif inp[0] == "contains":
             print(hs.contains(inp[1]))
-
-    # create_hash_viz(hs.ls)
-
-
-def lagListeAvOrdFil(filnavn):
-    ls = []
-    t = 0
-    lengde_teller = 0
-    with open(filnavn, "r") as f:
-        for linje in f:
-            ls.append(linje.strip())
-        return ls
-
 
 main()
