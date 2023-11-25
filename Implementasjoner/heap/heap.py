@@ -32,7 +32,7 @@ def removeMin(A):
 
 # Flytte metoder
 def bubbleUp(A, i):
-    while i > 0 and parentOf(i) > A[i]:
+    while i > 0 and A[parentOf(i)] > A[i]:
         
         j = parentOf(i)
         A = swap(A, i, j)

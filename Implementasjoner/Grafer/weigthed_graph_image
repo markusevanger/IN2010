@@ -1,0 +1,35 @@
+graph {
+	graph ["strict"=true]
+	C
+	C -- B [label=7]
+	C -- A [label=6]
+	C -- D [label=14]
+	C -- E [label=8]
+	C -- H [label=20]
+	F
+	F -- D [label=3]
+	F -- E [label=2]
+	J
+	J -- L [label=4]
+	J -- E [label=18]
+	J -- H [label=17]
+	J -- G [label=19]
+	J -- K [label=16]
+	B
+	B -- A [label=13]
+	B -- D [label=1]
+	I
+	I -- G [label=5]
+	I -- K [label=11]
+	A
+	L
+	L -- K [label=12]
+	D
+	D -- E [label=9]
+	E
+	H
+	H -- G [label=15]
+	G
+	G -- K [label=10]
+	K
+}
