@@ -1,7 +1,7 @@
 from graphviz import Graph
 
 def create_graph_image(skuespillere, kanter, film_relasjoner):
-    dot = Graph(format='png', graph_attr={'patchwork': 'sfdp', 'strict': 'true'})
+    dot = Graph(format='png', graph_attr={'patchwork': 'patchwork', 'strict': 'true'})
 
     # plasser alle i graf bilde
     for v in skuespillere:
@@ -14,7 +14,7 @@ def create_graph_image(skuespillere, kanter, film_relasjoner):
             dot.edge(v.navn, kant.navn, label=(film.tittel + ", " +  film.rating))
 
     # Render the graph to an image file
-    dot.view(filename='graph_image')  # This will create 'graph_image.png' and open it in the default image viewer
+    #dot.view(filename='graph_image')  # This will create 'graph_image.png' and open it in the default image viewer
 
 if __name__ == "__main__":
     testgraf = {

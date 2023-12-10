@@ -56,7 +56,7 @@ def finn_katt(parents, katt):
 
 
 def main():
-    
+        
     A, E, katt = lag_tre()
     parents = finn_foreldre(A, E)
     rute = finn_katt(parents, katt)
